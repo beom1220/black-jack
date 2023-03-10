@@ -7,17 +7,21 @@ import java.util.List;
 
 public abstract class Person {
     private List<Card> handCard = new ArrayList<>();
-    public abstract boolean hitOrStand(int check);
+    public abstract boolean hitSelect();
     public void receiveCard(Card card) {
         handCard.add(card);
     }
-    public int getNumber(int index) {
-        return handCard.get(index).getCardNum();
-    }
     public int getScore() {
         int sum = 0;
-        for (int scoreLoop = 0; scoreLoop < handCard.size(); scoreLoop++) {
-            sum += handCard.get(scoreLoop).getCardScore();
+        boolean hasA = false;
+        for (int scoreLoop = 0; scoreLoop<handCard.size();scoreLoop++) {
+            sum += getHandCard(scoreLoop).getCardScore();
+            if (getHandCard(scoreLoop).getCardScore() == 1) {
+                hasA = true;
+            }
+        }
+        if (hasA && (sum+10)<=21) {
+            sum += 10;
         }
         return sum;
     }
@@ -26,5 +30,8 @@ public abstract class Person {
     }
     public Card getHandCard(int index) {
         return handCard.get(index);
+    }
+    public int getNumOfHands() {
+        return handCard.size();
     }
 }

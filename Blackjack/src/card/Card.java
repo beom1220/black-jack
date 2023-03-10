@@ -1,6 +1,9 @@
 package card;
 
 public class Card {
+    public enum Suit {
+        SPADE, DIAMOND, HEART, CLOVER
+    }
     private int cardNum;
     private Suit cardSuit;
 
@@ -9,7 +12,7 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
-    public String showNum() {
+    public String getShowNum() {
         if (cardNum == 1) {
             return "A";
         } else if (cardNum == 11) {
@@ -22,8 +25,7 @@ public class Card {
             return Integer.toString(cardNum);
         }
     }
-
-    public String showSuit() {
+    public String getSuit() {
         switch (cardSuit) {
             case SPADE:
                 return "♠";
@@ -34,14 +36,6 @@ public class Card {
             default:
                 return "♣";
         }
-    }
-
-    public enum Suit {
-        SPADE, DIAMOND, HEART, CLOVER
-    }
-
-    public int getCardNum() {
-        return cardNum;
     }
     public int getCardScore() {
         if (cardNum > 10) {
