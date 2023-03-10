@@ -1,67 +1,61 @@
 package system;
 
+import card.Card;
 import person.Person;
 
 public class Judge {
-    boolean isPlayerBlackjack;
-    boolean isDealerBlackjack;
-    boolean isPlayerBust;
-    boolean isDealerBust;
-    int playerScore;
-    int dealerScore;
-    boolean isPlayerA;
-    boolean isDealerA;
-
-    public Judge(boolean isPlayerBlackjack, boolean isDealerBlackjack, boolean isPlayerBust, boolean isDealerBust, int playerScore, int dealerScore, boolean isPlayerA, boolean isDealerA) {
-        this.isPlayerBlackjack = isPlayerBlackjack;
-        this.isDealerBlackjack = isDealerBlackjack;
-        this.isPlayerBust = isPlayerBust;
-        this.isDealerBust = isDealerBust;
-        this.playerScore = playerScore;
-        this.dealerScore = dealerScore;
-        this.isPlayerA = isPlayerA;
-        this.isDealerA = isDealerA;
+    public boolean isBlackjack(Person person) {
+        return ((person.getNumber(0) * person.getNumber(1) == 10) && ((person.getNumber(0) + person.getNumber(1) == 11)));
     }
-
-    public int judge() {
-        int judgeResult;
-        if (isPlayerBlackjack && !isDealerBlackjack) {
-            judgeResult = 0;
-        } else if (isPlayerBlackjack) {
-            judgeResult = 3;
-        } else if (isDealerBlackjack) {
-            judgeResult = 2;
-        } else if (isPlayerBust) {
-            judgeResult = 2;
-        } else if (isDealerBust) {
-            judgeResult = 1;
+    public boolean isBust(Person person) {
+        return (person.getScore()>21);
+    }
+    public Result judge(Person player, Person dealer) {
+        if (isBlackjack(player) && !isBlackjack(dealer)) {
+            return Result.BLACKJACK;
+        } else if (isBlackjack(player)) {
+            return Result.DRAW;
+        } else if (isBlackjack(dealer)) {
+            return Result.LOSE;
+        } else if (isBust(player)) {
+            return Result.LOSE;
+        } else if (isBust(dealer)) {
+            return Result.WIN;
         } else {
-            if (isPlayerA && (playerScore+10) <= 21) {
-                playerScore += 10;
-            }
-            if (isDealerA && (dealerScore+10) <= 21) {
-                dealerScore += 10;
-            }
-            if(21-playerScore == 21-dealerScore) {
-                judgeResult = 3;
-                System.out.println("서로 총합이 같기 때문에 무승부입니다.");
-            } else if (21-playerScore > 21-dealerScore) {
-                judgeResult = 2;
-                System.out.println("딜러의 합이 21에 더 근접하여 패배하였습니다.");
+            if (21-player.getScore() == 21-dealer.getScore()) {
+                return Result.DRAW;
+            } else if (21-player.getScore() > 21-dealer.getScore()) {
+                return Result.LOSE;
             } else {
-                judgeResult = 1;
-                System.out.println("플레이어의 합이 21에 더 근접하여 승리하였습니다.");
+                return Result.WIN;
             }
         }
-        return judgeResult;
     }
-
-//    public boolean isPersonBlackJack(Person person) {
-//        결과값;
-//    }
-
-//    public Person judge(Person p1, Person p2) {
-//
-//        return 이긴사람;
-//    }
+    public int pay(Result result, int betMoney) {
+        switch (result) {
+            case BLACKJACK:
+                System.out.println("*******************************************");
+                System.out.println("블랙잭으로 승리하여 배팅 금액의 1.5배를 획득합니다.");
+                System.out.println("*******************************************");
+                return (int) (betMoney * 1.5);
+            case WIN:
+                System.out.println("***************************************");
+                System.out.println("라운드를 승리하여 배팅 금액의 2배를 획득합니다.");
+                System.out.println("***************************************");
+                return betMoney * 2;
+            case LOSE:
+                System.out.println("************************************");
+                System.out.println("라운드에서 패배하여 배팅 금액을 잃었습니다.");
+                System.out.println("************************************");
+                return 0;
+            default:
+                System.out.println("**********************************");
+                System.out.println("무승부하여 배팅 금액이 그대로 돌아옵니다.");
+                System.out.println("**********************************");
+                return betMoney;
+        }
+    }
+    public enum Result {
+        BLACKJACK, WIN, LOSE, DRAW
+    }
 }

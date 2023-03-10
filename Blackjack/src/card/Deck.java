@@ -1,29 +1,21 @@
 package card;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class Deck {
-    List<Integer> cardDeck = new ArrayList<>();
-    public int cardIndex = 0;
+    private List<Card> cards = new ArrayList<>();
+
     public void makeDeck() {
-        cardDeck.clear();
-        cardIndex = 0;
-        for (int i = 0; i < 52; i++) {
-            int mixed = 0;
-            do {
-                mixed = (int) (Math.random() * 52) + 1;
-                //System.out.println("이번엔"+mixed+"가 나왔다.");
-            } while (cardDeck.contains(mixed));
-            cardDeck.add(mixed);
-            //System.out.println("그래서" + mixed + "를 넣었다.");
+        cards.clear();
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (int num = 1; num <= 13; num++) {
+                Card card = new Card(num, suit);
+                cards.add(card);
+            }
         }
-        System.out.println("덱을 셔플했습니다.");
     }
 
-    public int drawCard() {
-        int cardId = cardDeck.get(cardIndex);
-        //cardDeck.remove(cardIndex);
-        cardIndex++;
-        return cardId;
+    public Card drawCard() {
+        return cards.get((int) (Math.random() * cards.size()));
     }
 }
