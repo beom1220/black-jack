@@ -2,6 +2,8 @@ package system;
 
 import person.Person;
 
+import static system.Result.DRAW;
+
 public class Judgement {
     public boolean isBlackjack(Person person) {
         return (person.getScore() == 21 && person.getNumOfHands() == 2);
@@ -13,7 +15,7 @@ public class Judgement {
         if (isBlackjack(player) && !isBlackjack(dealer)) {
             return Result.BLACKJACK;
         } else if (isBlackjack(player)) {
-            return Result.DRAW;
+            return DRAW;
         } else if (isBlackjack(dealer)) {
             return Result.LOSE;
         } else if (isBust(player)) {
@@ -22,7 +24,7 @@ public class Judgement {
             return Result.WIN;
         } else {
             if (21-player.getScore() == 21-dealer.getScore()) {
-                return Result.DRAW;
+                return DRAW;
             } else if (21-player.getScore() > 21-dealer.getScore()) {
                 return Result.LOSE;
             } else {
