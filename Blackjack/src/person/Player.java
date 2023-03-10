@@ -7,9 +7,9 @@ public class Player extends Person {
     private int betMoney;
 
     @Override
-    public boolean hitSelect() {
+    public boolean selectHit() {
         Scanner sc = new Scanner(System.in);
-        return (sc.nextInt() == 1);
+        return (sc.nextLine().equals("1"));
     }
     public int getMoney() {
         return money;
@@ -20,7 +20,7 @@ public class Player extends Person {
     public void setMoney(int money) {
         this.money = money;
     }
-    public void betting(int betMoney) {
+    public void bet(int betMoney) {
         this.money -= betMoney;
         this.betMoney = betMoney;
     }

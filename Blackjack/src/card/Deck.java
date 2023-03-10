@@ -1,6 +1,7 @@
 package card;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Deck {
     private List<Card> cards = new ArrayList<>();
@@ -16,6 +17,6 @@ public class Deck {
     }
 
     public Card drawCard() {
-        return cards.get((int) (Math.random() * cards.size()));
+        return cards.remove((int) (Math.random() * cards.size()));
     }
 }

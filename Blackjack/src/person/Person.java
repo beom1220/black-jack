@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Person {
     private List<Card> handCard = new ArrayList<>();
-    public abstract boolean hitSelect();
+    public abstract boolean selectHit();
     public void receiveCard(Card card) {
         handCard.add(card);
     }

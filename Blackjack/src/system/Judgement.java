@@ -2,20 +2,18 @@ package system;
 
 import person.Person;
 
-import static system.Result.DRAW;
-
-public class Judgement {
-    public boolean isBlackjack(Person person) {
+public final class Judgement {
+    public static boolean isBlackjack(Person person) {
         return (person.getScore() == 21 && person.getNumOfHands() == 2);
     }
-    public boolean isBust(Person person) {
+    public static boolean isBust(Person person) {
         return (person.getScore()>21);
     }
-    public Result judge(Person player, Person dealer) {
+    public static Result judge(Person player, Person dealer) {
         if (isBlackjack(player) && !isBlackjack(dealer)) {
             return Result.BLACKJACK;
         } else if (isBlackjack(player)) {
-            return DRAW;
+            return Result.DRAW;
         } else if (isBlackjack(dealer)) {
             return Result.LOSE;
         } else if (isBust(player)) {
@@ -24,7 +22,7 @@ public class Judgement {
             return Result.WIN;
         } else {
             if (21-player.getScore() == 21-dealer.getScore()) {
-                return DRAW;
+                return Result.DRAW;
             } else if (21-player.getScore() > 21-dealer.getScore()) {
                 return Result.LOSE;
             } else {
@@ -32,7 +30,7 @@ public class Judgement {
             }
         }
     }
-    public int pay(Result result, int betMoney) {
+    public static int pay(Result result, int betMoney) {
         switch (result) {
             case BLACKJACK:
                 return (int) (betMoney * 1.5);

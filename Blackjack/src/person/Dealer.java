@@ -2,7 +2,7 @@ package person;
 
 public class Dealer extends Person {
     @Override
-    public boolean hitSelect() {
+    public boolean selectHit() {
         return (getScore()<=16);
     }
 }
